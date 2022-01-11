@@ -2,7 +2,8 @@ const express = require('express');
 const res = require('express/lib/response');
 const debug = require('debug')('app:authRouter')
 const {MongoClient, ObjectID} = require('mongodb');
-
+//const passport = require('../config/passport');
+const passport = require('passport');
 const authRouter = express.Router();
 
 authRouter.route('/signUp').post((req, res)=>{
@@ -34,6 +35,15 @@ const dbName ='lecximantic';
 
     
 })
+
+authRouter.route('/signIn').get((req, res)=>{
+    res.render('signin');
+})
+.post(passport.authenticate('local',{
+        successRedirect: '/auth/profile',
+        failureMessage: '/',
+    })
+)
 
 authRouter.route('/profile').get((req, res)=>{
     res.json(req.user);
