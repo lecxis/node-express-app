@@ -41,7 +41,7 @@ authRouter.route('/signIn').get((req, res)=>{
 })
 .post(passport.authenticate('local',{
         successRedirect: '/auth/profile',
-        failureMessage: '/',
+        failureRedirect: '/',
     })
 )
 
