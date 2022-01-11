@@ -2,9 +2,16 @@ const express = require('express');
 const debug = require('debug')('app:sessionRouter')
 const {MongoClient, ObjectID} = require('mongodb');
 const sessionsRouter =express.Router();
-const sessions = require ('../data/sessions.json');
+//const sessions = require ('../data/sessions.json');
 
-
+sessionsRouter.use((req, res, next)=>{
+  if(req.user){
+    next();
+  }
+  else{
+    res.redirect('auth/signIn');
+  }
+})
 sessionsRouter.route('/').get((req, res) =>{
   const url = 'mongodb+srv://dbuser:passmongo@lecximantic.pssx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const dbName ='lecximantic';
