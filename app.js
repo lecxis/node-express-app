@@ -3,6 +3,11 @@ const chalk = require('chalk');
 const debug = require ('debug')('app');
 const morgan =require ('morgan');
 const path =require('path');
+const passport= require ('passport');
+const cookieParser= require ('cookie-parser');
+const session = require ('express-session');
+
+//npm install passport@0.4 express-session@:1.17 cookie-parser@1.4
 
 
 const PORT = process.env.PORT || 3000;
@@ -19,6 +24,10 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
+app.use(session({secret: 'lecximantics'}));
+
+require('./src/config/passport.js')(app)
 
 
 app.use('/sessions', sessionsRouter);
